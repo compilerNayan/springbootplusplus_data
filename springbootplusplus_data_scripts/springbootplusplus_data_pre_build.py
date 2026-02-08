@@ -169,8 +169,8 @@ def get_all_library_dirs(project_dir=None):
     
     Returns:
         Dictionary with:
-        - 'scripts_dirs': List of paths to library scripts directories (e.g., arduinolib1_scripts)
-        - 'root_dirs': List of paths to library root directories (e.g., arduinolib1-src)
+        - 'scripts_dirs': List of paths to library scripts directories (e.g., serializationlib_scripts)
+        - 'root_dirs': List of paths to library root directories (e.g., serializationlib-src)
         - 'by_name': Dictionary mapping library names to their root directories
     """
     if project_dir is None:
@@ -199,7 +199,7 @@ def get_all_library_dirs(project_dir=None):
                     lib_root = lib_dir.resolve()
                     root_dirs.append(lib_root)
                     
-                    # Extract library name (e.g., "arduinolib1-src" -> "arduinolib1")
+                    # Extract library name (e.g., "serializationlib-src" -> "serializationlib")
                     lib_name = lib_dir.name[:-4]  # Remove "-src" suffix
                     by_name[lib_name] = lib_root
                     

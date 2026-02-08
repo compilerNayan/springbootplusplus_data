@@ -13,7 +13,7 @@
     "url": "https://github.com/compilerNayan/springbootplusplus_data.git"
   },
   "dependencies": {
-    "serializationlib": "https://github.com/compilerNayan/arduinolib1.git"
+    "serializationlib": "https://github.com/compilerNayan/serializationlib.git"
   },
   "license": "MIT",
   "homepage": "",

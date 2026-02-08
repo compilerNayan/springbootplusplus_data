@@ -12,7 +12,7 @@ include(FetchContent)
 # Fetch serializationlib dependency
 FetchContent_Declare(
     serializationlib
-    GIT_REPOSITORY https://github.com/compilerNayan/arduinolib1.git
+    GIT_REPOSITORY https://github.com/compilerNayan/serializationlib.git
     GIT_TAG        main  # Use the main branch
 )
 

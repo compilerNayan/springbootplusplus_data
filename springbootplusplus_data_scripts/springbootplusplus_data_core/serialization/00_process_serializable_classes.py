@@ -45,13 +45,13 @@ spec_s3 = importlib.util.spec_from_file_location("S3_inject_serialization", os.p
 S3_inject_serialization = importlib.util.module_from_spec(spec_s3)
 spec_s3.loader.exec_module(S3_inject_serialization)
 
-# Import enum serialization script from arduinolib1 (it's shared)
-# Try to find arduinolib1's serialization scripts
+# Import enum serialization script from serializationlib (it's shared)
+# Try to find serializationlib's serialization scripts
 S8_handle_enum_serialization = None
 try:
     # Method 1: Try to find from library_dir if available
     if 'library_dir' in globals():
-        potential_lib1_scripts = os.path.join(globals()['library_dir'], 'arduinolib1', 'serializationlib_scripts', 'serializationlib_serializer', 'S8_handle_enum_serialization.py')
+        potential_lib1_scripts = os.path.join(globals()['library_dir'], 'serializationlib', 'serializationlib_scripts', 'serializationlib_serializer', 'S8_handle_enum_serialization.py')
         if os.path.exists(potential_lib1_scripts):
             spec_s8 = importlib.util.spec_from_file_location("S8_handle_enum_serialization", potential_lib1_scripts)
             S8_handle_enum_serialization = importlib.util.module_from_spec(spec_s8)
@@ -68,7 +68,7 @@ try:
             project_dir = os.environ['CMAKE_PROJECT_DIR']
         
         if project_dir:
-            potential_lib1_scripts = os.path.join(project_dir, 'arduinolib1', 'serializationlib_scripts', 'serializationlib_serializer', 'S8_handle_enum_serialization.py')
+            potential_lib1_scripts = os.path.join(project_dir, 'serializationlib', 'serializationlib_scripts', 'serializationlib_serializer', 'S8_handle_enum_serialization.py')
             if os.path.exists(potential_lib1_scripts):
                 spec_s8 = importlib.util.spec_from_file_location("S8_handle_enum_serialization", potential_lib1_scripts)
                 S8_handle_enum_serialization = importlib.util.module_from_spec(spec_s8)
@@ -79,7 +79,7 @@ try:
         current_file = os.path.abspath(__file__)
         # Go up: serialization -> springbootplusplus_data_core -> springbootplusplus_data_scripts -> springbootplusplus_data -> project root
         project_root = os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(current_file))))
-        potential_lib1_scripts = os.path.join(project_root, 'arduinolib1', 'serializationlib_scripts', 'serializationlib_serializer', 'S8_handle_enum_serialization.py')
+        potential_lib1_scripts = os.path.join(project_root, 'serializationlib', 'serializationlib_scripts', 'serializationlib_serializer', 'S8_handle_enum_serialization.py')
         if os.path.exists(potential_lib1_scripts):
             spec_s8 = importlib.util.spec_from_file_location("S8_handle_enum_serialization", potential_lib1_scripts)
             S8_handle_enum_serialization = importlib.util.module_from_spec(spec_s8)
