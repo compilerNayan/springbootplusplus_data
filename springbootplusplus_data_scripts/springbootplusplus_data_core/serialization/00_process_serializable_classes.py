@@ -77,7 +77,7 @@ try:
     # Method 3: Try relative path from current script
     if S8_handle_enum_serialization is None:
         current_file = os.path.abspath(__file__)
-        # Go up: serialization -> springbootplusplus_data_core -> springbootplusplus_data_scripts -> arduinolib3 -> project root
+        # Go up: serialization -> springbootplusplus_data_core -> springbootplusplus_data_scripts -> springbootplusplus_data -> project root
         project_root = os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(current_file))))
         potential_lib1_scripts = os.path.join(project_root, 'arduinolib1', 'serializationlib_scripts', 'serializationlib_serializer', 'S8_handle_enum_serialization.py')
         if os.path.exists(potential_lib1_scripts):

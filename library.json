@@ -10,7 +10,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/compilerNayan/arduinolib3.git"
+    "url": "https://github.com/compilerNayan/springbootplusplus_data.git"
   },
   "dependencies": {
     "serializationlib": "https://github.com/compilerNayan/arduinolib1.git"
