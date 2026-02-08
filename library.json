@@ -1,0 +1,26 @@
+{
+  "name": "springbootplusplus_data",
+  "version": "1.0.0",
+  "description": "A header-only PlatformIO library that depends on serializationlib",
+  "keywords": "arduino, utility",
+  "authors": [
+    {
+      "name": "Nayan"
+    }
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/compilerNayan/arduinolib3.git"
+  },
+  "dependencies": {
+    "serializationlib": "https://github.com/compilerNayan/arduinolib1.git"
+  },
+  "license": "MIT",
+  "homepage": "",
+  "frameworks": "arduino",
+  "platforms": "*",
+  "build": {
+    "extraScript": "springbootplusplus_data_scripts/springbootplusplus_data_pre_build.py"
+  }
+}
+
