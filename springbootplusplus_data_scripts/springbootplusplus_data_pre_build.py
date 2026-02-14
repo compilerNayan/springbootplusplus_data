@@ -369,67 +369,6 @@ else:
 # Debug: Print current working directory
 # print(f"Current working directory: {os.getcwd()}")
 
-
-def _load_repository_already_processed_paths(project_dir):
-    """
-    Read client's src/generated/springbootplusplus_data_repository.dat; each line is one file path.
-    Return a set of normalized absolute paths. If the file is missing or unreadable, return empty set.
-    """
-    if not project_dir:
-        return set()
-    dat_path = os.path.join(project_dir, "src", "generated", "springbootplusplus_data_repository.dat")
-    if not os.path.isfile(dat_path):
-        return set()
-    result = set()
-    try:
-        with open(dat_path, "r", encoding="utf-8") as f:
-            for line in f:
-                path = line.strip()
-                if not path:
-                    continue
-                # Resolve relative paths against project_dir so .dat works regardless of cwd
-                if not os.path.isabs(path):
-                    path = os.path.join(project_dir, path)
-                result.add(os.path.normpath(os.path.abspath(path)))
-    except (OSError, IOError):
-        return set()
-    return result
-
-
-def _is_client_project_file(project_dir, file_path):
-    """Return True if file_path is under project_dir (client project)."""
-    if not project_dir or not file_path:
-        return False
-    try:
-        project_abs = os.path.abspath(project_dir)
-        file_abs = os.path.abspath(file_path)
-        return file_abs == project_abs or file_abs.startswith(project_abs + os.sep)
-    except (ValueError, OSError):
-        return False
-
-
-def _is_repository_processing_required(file_path, already_processed_set):
-    """Return True if file should be processed (not in cache), False to skip."""
-    if not file_path:
-        return True
-    normalized = os.path.normpath(os.path.abspath(file_path))
-    return normalized not in already_processed_set
-
-
-def _append_repository_processed_file_to_client_log(project_dir, file_path):
-    """Append file_path to client's src/generated/springbootplusplus_data_repository.dat. Client files only."""
-    if not project_dir or not _is_client_project_file(project_dir, file_path):
-        return
-    try:
-        generated_dir = os.path.join(project_dir, "src", "generated")
-        os.makedirs(generated_dir, exist_ok=True)
-        dat_path = os.path.join(generated_dir, "springbootplusplus_data_repository.dat")
-        with open(dat_path, "a", encoding="utf-8") as f:
-            f.write(file_path + "\n")
-    except (OSError, IOError):
-        pass
-
-
 # Get all library directories and print source files from all libraries
 # print(f"\n{'=' * 60}")
 # print("📚 Listing source files from all libraries...")
@@ -499,8 +438,12 @@ try:
             
             # Process each header file with implement_repository script
             if all_header_files:
-                # Load set of already-processed paths from client's springbootplusplus_data_repository.dat (skip those)
-                repository_already_processed = _load_repository_already_processed_paths(project_dir) if project_dir else set()
+                # print(f"\n{'=' * 60}")
+                # print(f"🔧 Processing {len(all_header_files)} header file(s) for repository implementation...")
+                # print(f"{'=' * 60}\n")
+                # print(f"Library directory: {library_dir}")
+                # print(f"Project directory: {project_dir}")
+                pass
                 
                 try:
                     # Import process_repository module
@@ -520,16 +463,17 @@ try:
                     
                     for file_path in all_header_files:
                         try:
-                            path_str = str(file_path)
-                            if not _is_repository_processing_required(path_str, repository_already_processed):
-                                continue
                             # Process file for repository implementation
-                            result = process_repository(path_str, str(library_dir), dry_run=False)
+                            result = process_repository(str(file_path), str(library_dir), dry_run=False)
                             if result:
+                                # print(f"  ✓ Repository implementation generated for: {file_path}")
                                 implemented_count += 1
-                                _append_repository_processed_file_to_client_log(project_dir, path_str)
+                            else:
+                                # print(f"  - No repository found in: {file_path}")
+                                pass
                             processed_count += 1
                         except Exception as e:
+                            # print(f"⚠️  Warning: Error processing {file_path}: {e}")
                             import traceback
                             traceback.print_exc()
                     
