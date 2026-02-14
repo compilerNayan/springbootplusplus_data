@@ -282,8 +282,10 @@ def process_repository(file_path: str, library_dir: str, dry_run: bool = False) 
     annotation_processed = comment_repository_annotation(file_path, dry_run)
     
     if include_added and annotation_processed:
+        # print(f"✅ Successfully processed repository {class_name}")
         return True
     else:
+        # print(f"⚠️  Repository {class_name} processed but annotation marking failed")
         return include_added  # Return True if at least include was added
 
 
