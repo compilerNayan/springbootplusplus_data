@@ -464,7 +464,6 @@ try:
                     for file_path in all_header_files:
                         try:
                             # Process file for repository implementation
-                            # This will detect @Repository annotation, create impl file, and add include
                             result = process_repository(str(file_path), str(library_dir), dry_run=False)
                             if result:
                                 # print(f"  ✓ Repository implementation generated for: {file_path}")
