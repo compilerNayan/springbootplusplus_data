@@ -14,7 +14,7 @@ class CpaRepository {
     Public Virtual optional<Entity> FindById(ID id) = 0;
 
     // Read: Find all entities
-    Public Virtual Vector<Entity> FindAll() = 0;
+    Public Virtual StdVector<Entity> FindAll() = 0;
 
     // Update: Update an existing entity
     Public Virtual Entity Update(Entity& entity) = 0;

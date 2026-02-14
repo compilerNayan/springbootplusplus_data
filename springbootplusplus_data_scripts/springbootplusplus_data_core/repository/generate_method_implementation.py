@@ -16,7 +16,7 @@ Examples:
     
     Generates:
         Public Virtual optional<Entity> FindByLastName(CStdString& someVariableName) override {
-            vector<Entity> entities = FindAll();
+            StdVector<Entity> entities = FindAll();
             for (const auto& entity : entities) {
                 if (entity.lastName == someVariableName) {
                     return entity;
@@ -100,7 +100,7 @@ def generate_find_implementation(access_modifier: str, return_type: str, method_
     
     Args:
         access_modifier: Access modifier like "Public Virtual"
-        return_type: Return type like "optional<Entity>" or "Entity" or "vector<Entity>"
+        return_type: Return type like "optional<Entity>" or "Entity" or "StdVector<Entity>"
         method_name: Method name like "FindByLastName"
         parameter_declaration: Parameter declaration like "CStdString& lastName"
         variable_name: Variable name in camelCase like "lastName"
@@ -111,7 +111,7 @@ def generate_find_implementation(access_modifier: str, return_type: str, method_
     """
     # Determine if return type is optional, vector, or single entity
     is_optional = 'optional' in return_type or 'Optional' in return_type
-    is_vector = 'vector' in return_type or 'Vector' in return_type
+    is_vector = 'StdVector' in return_type or 'vector' in return_type or 'Vector' in return_type
     
     # Build the method signature
     method_signature = f"    {access_modifier} {return_type} {method_name}({parameter_declaration}) override {{"
@@ -120,7 +120,7 @@ def generate_find_implementation(access_modifier: str, return_type: str, method_
     if is_optional:
         # Return optional<EntityType> - find first match
         code = f"""{method_signature}
-        vector<{entity_type}> entities = FindAll();
+        StdVector<{entity_type}> entities = FindAll();
         for (const auto& entity : entities) {{
             if (entity.{variable_name} == {parameter_name}) {{
                 return entity;
@@ -129,10 +129,10 @@ def generate_find_implementation(access_modifier: str, return_type: str, method_
         return std::nullopt;
     }}"""
     elif is_vector:
-        # Return vector<EntityType> - find all matches
+        # Return StdVector<EntityType> - find all matches
         code = f"""{method_signature}
-        vector<{entity_type}> entities = FindAll();
-        vector<{entity_type}> result;
+        StdVector<{entity_type}> entities = FindAll();
+        StdVector<{entity_type}> result;
         for (const auto& entity : entities) {{
             if (entity.{variable_name} == {parameter_name}) {{
                 result.push_back(entity);
@@ -143,7 +143,7 @@ def generate_find_implementation(access_modifier: str, return_type: str, method_
     else:
         # Return single EntityType - find first match (may need to handle not found case)
         code = f"""{method_signature}
-        vector<{entity_type}> entities = FindAll();
+        StdVector<{entity_type}> entities = FindAll();
         for (const auto& entity : entities) {{
             if (entity.{variable_name} == {parameter_name}) {{
                 return entity;

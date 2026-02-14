@@ -94,8 +94,8 @@ class CpaRepositoryImpl : public CpaRepository<Entity, ID> {
     }
 
     // Helper method to read all IDs from the IDs file
-    Protected Vector<ID> ReadAllIds() {
-        Vector<ID> ids;
+    Protected StdVector<ID> ReadAllIds() {
+        StdVector<ID> ids;
         StdString idsFilePath = GetIdsFilePath();
         CStdString idsFilePathRef = idsFilePath;
         StdString contents = fileManager->Read(idsFilePathRef);
@@ -130,7 +130,7 @@ class CpaRepositoryImpl : public CpaRepository<Entity, ID> {
     }
 
     // Helper method to write all IDs to the IDs file
-    Protected Void WriteAllIds(const Vector<ID>& ids) {
+    Protected Void WriteAllIds(const StdVector<ID>& ids) {
         StdString idsFilePath = GetIdsFilePath();
         StdString contents;
         
@@ -146,7 +146,7 @@ class CpaRepositoryImpl : public CpaRepository<Entity, ID> {
 
     // Helper method to check if ID exists in the IDs file
     Protected Bool IdExistsInFile(ID id) {
-        Vector<ID> ids = ReadAllIds();
+        StdVector<ID> ids = ReadAllIds();
         for (const auto& existingId : ids) {
             if (existingId == id) {
                 return true;
@@ -207,11 +207,11 @@ class CpaRepositoryImpl : public CpaRepository<Entity, ID> {
         return entity;
     }
     // Read: Find all entities
-    Public Virtual Vector<Entity> FindAll() override {
-        Vector<Entity> entities;
+    Public Virtual StdVector<Entity> FindAll() override {
+        StdVector<Entity> entities;
         
         // Read all IDs from the IDs file
-        Vector<ID> ids = ReadAllIds();
+        StdVector<ID> ids = ReadAllIds();
         
         // For each ID, read and deserialize the entity
         for (const auto& id : ids) {
@@ -297,8 +297,8 @@ class CpaRepositoryImpl : public CpaRepository<Entity, ID> {
         fileManager->Delete(filePathRef);
         
         // Remove ID from IDs file
-        Vector<ID> ids = ReadAllIds();
-        Vector<ID> updatedIds;
+        StdVector<ID> ids = ReadAllIds();
+        StdVector<ID> updatedIds;
         for (const auto& existingId : ids) {
             if (existingId != id) {
                 updatedIds.push_back(existingId);
